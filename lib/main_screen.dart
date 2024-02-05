@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:product_viewer/component.dart';
+import 'package:product_viewer/constant/component.dart';
 import 'package:product_viewer/cubit.dart';
 import 'package:product_viewer/detail_screen.dart';
 import 'package:product_viewer/state.dart';
 
 class main_screen extends StatelessWidget {
-  const main_screen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +17,15 @@ class main_screen extends StatelessWidget {
           builder: (BuildContext context , AppState state){
           AppCubit cubit = AppCubit.get(context);
           return Scaffold(
-            appBar: AppBar(),
-            body: SingleChildScrollView(
-              child: state is AppGetProductsSuccessState ?
-              Column(
+            appBar: AppBar(
+              title: Text('Home' , style: TextStyle(fontSize: 20),),
+              backgroundColor: Colors.teal,
+            ),
+
+            //if the condition is true the products will be displayed
+            body: state is AppGetProductsSuccessState ?
+            SingleChildScrollView(
+              child: Column(
                 children: [
                   Row(
                     children: [
@@ -76,12 +80,13 @@ class main_screen extends StatelessWidget {
                       ),
 
                     ],
-                  ),
-
+                  )
                 ],
-              ) :
-                  Center(child: CircularProgressIndicator()),
-            ),
+              ),
+            ):
+
+            // else
+            Center(child: CircularProgressIndicator(color: Colors.blue,)),
           );
           },
       ),

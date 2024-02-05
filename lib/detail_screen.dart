@@ -2,8 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:native_device_orientation/native_device_orientation.dart';
 
+
 Widget buidDetails(list)=>Scaffold(
-  appBar: AppBar(),
+  appBar: AppBar(
+    title: Text('Product details' , style: TextStyle(fontSize: 20),),
+    titleSpacing: 0,
+    backgroundColor: Colors.teal,
+  ),
   body: NativeDeviceOrientedWidget(
     portrait: (context){
       return portrait(list);
@@ -19,29 +24,48 @@ Widget buidDetails(list)=>Scaffold(
   ),
 );
 
-Widget portrait(list)=> Column(
-    children: [
-      Text(list['name'].toString()),
-      Image(image: NetworkImage('https://www.woolha.com/media/2019/01/flutter-setting-device-orientation-to-landscape-or-portrait-1200x627.jpg')),
-      Text('describtion'),
-    ],
-  );
-Widget landscape(list)=> Column(
-    children: [
-      Row(
+// portrait widget
+Widget portrait(list)=> SingleChildScrollView(
+  child: Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(child: Image(image: NetworkImage('https://www.woolha.com/media/2019/01/flutter-setting-device-orientation-to-landscape-or-portrait-1200x627.jpg'))),
+          Text(list['name'].toString() , style: TextStyle(fontWeight: FontWeight.bold),),
+          Image(width: double.infinity, image: NetworkImage(list['image_url'])),
           SizedBox(
-            width: 10,
+            height: 10,
           ),
-          Expanded(child: Text(list['name'].toString())),
+          Text(list['description']),
         ],
       ),
-      SizedBox(
-        height: 10,
+  ),
+);
+
+// landscape widget
+Widget landscape(list)=> SingleChildScrollView(
+  child: Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(child: Image(image: NetworkImage(list['image_url']))),
+              SizedBox(
+                width: 10,
+              ),
+              Expanded(child: Text(list['name'].toString())),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(list['description']),
+        ],
       ),
-      Text('describtion'),
-    ],
-  );
+  ),
+);
 
 
